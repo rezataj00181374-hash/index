@@ -35,7 +35,6 @@
     min-height: 100vh;
   }
 
-  /* ذرات پس‌زمینه */
   #particles {
     position: fixed;
     top: 0; left: 0;
@@ -46,7 +45,6 @@
                 radial-gradient(circle at 50% 50%, rgba(0,212,255,0.15), transparent 70%);
   }
 
-  /* هدر */
   header {
     position: fixed;
     top: 0; width: 100%;
@@ -99,6 +97,302 @@
     transition: 0.3s;
   }
   .theme-btn:hover { transform: scale(1.1) rotate(15deg); }
+
+  /* ========== پخش‌کننده موزیک ========== */
+  .music-toggle {
+    position: fixed;
+    bottom: 25px;
+    left: 25px;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--accent1), var(--accent2));
+    border: none;
+    color: white;
+    font-size: 26px;
+    cursor: pointer;
+    z-index: 1600;
+    box-shadow: 0 10px 30px rgba(106,90,205,0.6);
+    transition: 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation: floatBtn 3s ease-in-out infinite;
+  }
+  @keyframes floatBtn {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-8px); }
+  }
+  .music-toggle:hover { transform: scale(1.1) rotate(15deg); }
+  .music-toggle.hidden { opacity: 0; pointer-events: none; transform: scale(0); }
+
+  .music-player {
+    position: fixed;
+    bottom: 25px;
+    left: 25px;
+    width: 360px;
+    max-height: 90vh;
+    background: var(--card);
+    backdrop-filter: blur(25px);
+    border: 1px solid var(--border);
+    border-radius: 24px;
+    padding: 20px;
+    z-index: 1500;
+    box-shadow: 0 15px 50px rgba(106,90,205,0.35);
+    transition: all 0.4s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+    transform-origin: bottom left;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  .music-player.collapsed {
+    opacity: 0;
+    pointer-events: none;
+    transform: scale(0.5) translateY(50px);
+  }
+
+  .close-player {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.1);
+    border: none;
+    color: var(--text);
+    cursor: pointer;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: 0.3s;
+    z-index: 10;
+  }
+  .close-player:hover { background: var(--accent2); transform: rotate(90deg); }
+
+  .music-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding-top: 5px;
+  }
+
+  .music-cover {
+    width: 55px;
+    height: 55px;
+    border-radius: 14px;
+    background: linear-gradient(135deg, var(--accent1), var(--accent2), var(--accent3));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 26px;
+    flex-shrink: 0;
+    transition: 0.3s;
+    box-shadow: 0 5px 20px rgba(106,90,205,0.5);
+  }
+
+  .music-player.playing .music-cover {
+    animation: coverSpin 4s linear infinite;
+  }
+
+  @keyframes coverSpin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+
+  .music-info { flex: 1; overflow: hidden; }
+
+  .music-title {
+    font-weight: 700;
+    font-size: 14px;
+    margin-bottom: 3px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .music-artist {
+    font-size: 12px;
+    color: var(--muted);
+  }
+
+  .waves {
+    display: flex;
+    align-items: flex-end;
+    gap: 3px;
+    height: 20px;
+    margin-top: 6px;
+  }
+  .waves span {
+    width: 3px;
+    height: 5px;
+    background: linear-gradient(180deg, var(--accent2), var(--accent3));
+    border-radius: 2px;
+    transition: 0.3s;
+  }
+  .music-player.playing .waves span {
+    animation: waveAnim 0.8s ease-in-out infinite;
+  }
+  .music-player.playing .waves span:nth-child(1) { animation-delay: 0s; }
+  .music-player.playing .waves span:nth-child(2) { animation-delay: 0.1s; }
+  .music-player.playing .waves span:nth-child(3) { animation-delay: 0.2s; }
+  .music-player.playing .waves span:nth-child(4) { animation-delay: 0.3s; }
+  .music-player.playing .waves span:nth-child(5) { animation-delay: 0.4s; }
+  .music-player.playing .waves span:nth-child(6) { animation-delay: 0.5s; }
+
+  @keyframes waveAnim {
+    0%, 100% { height: 5px; }
+    50% { height: 20px; }
+  }
+
+  .music-controls {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+  }
+
+  .ctrl-btn {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.08);
+    border: 1px solid var(--border);
+    color: var(--text);
+    cursor: pointer;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: 0.3s;
+  }
+  .ctrl-btn:hover { background: var(--accent2); transform: scale(1.1); }
+  .ctrl-btn.active {
+    background: linear-gradient(135deg, var(--accent1), var(--accent2));
+    color: white;
+    box-shadow: 0 5px 15px rgba(106,90,205,0.5);
+  }
+
+  .play-btn {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--accent1), var(--accent2));
+    border: none;
+    color: white;
+    font-size: 20px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: 0.3s;
+    box-shadow: 0 8px 20px rgba(106,90,205,0.5);
+    flex-shrink: 0;
+  }
+  .play-btn:hover { transform: scale(1.1); box-shadow: 0 10px 25px rgba(255,107,157,0.6); }
+  .play-btn:active { transform: scale(0.95); }
+
+  .progress-container {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .progress-bar {
+    flex: 1;
+    height: 6px;
+    background: rgba(255,255,255,0.1);
+    border-radius: 10px;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .progress-fill {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, var(--accent1), var(--accent2), var(--accent3));
+    border-radius: 10px;
+    transition: width 0.1s linear;
+    position: relative;
+  }
+
+  .progress-fill::after {
+    content: '';
+    position: absolute;
+    right: 0; top: 50%;
+    transform: translateY(-50%);
+    width: 12px; height: 12px;
+    border-radius: 50%;
+    background: white;
+    box-shadow: 0 0 10px var(--accent2);
+    opacity: 0;
+    transition: 0.3s;
+  }
+  .progress-bar:hover .progress-fill::after { opacity: 1; }
+
+  .time {
+    font-size: 11px;
+    color: var(--muted);
+    min-width: 35px;
+    text-align: center;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .volume-container {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 0 4px;
+  }
+
+  .volume-icon {
+    font-size: 14px;
+    cursor: pointer;
+    user-select: none;
+  }
+
+  .volume-slider {
+    flex: 1;
+    height: 4px;
+    -webkit-appearance: none;
+    appearance: none;
+    background: rgba(255,255,255,0.15);
+    border-radius: 10px;
+    outline: none;
+    cursor: pointer;
+  }
+
+  .volume-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--accent2), var(--accent3));
+    cursor: pointer;
+    box-shadow: 0 0 10px rgba(255,107,157,0.7);
+  }
+
+  .volume-slider::-moz-range-thumb {
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--accent2), var(--accent3));
+    cursor: pointer;
+    border: none;
+  }
+
+  @media (max-width: 500px) {
+    .music-player {
+      width: calc(100% - 30px);
+      left: 15px;
+      bottom: 15px;
+    }
+    .music-toggle { left: 15px; bottom: 15px; }
+  }
 
   /* Hero */
   .hero {
@@ -165,7 +459,6 @@
   }
   .btn-outline:hover { background: var(--accent3); color: #000; }
 
-  /* بخش‌ها */
   section { padding: 100px 40px; max-width: 1300px; margin: 0 auto; }
 
   .section-title {
@@ -182,7 +475,6 @@
     background-clip: text;
   }
 
-  /* کارت‌های بابک و رضا */
   .team-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -289,7 +581,6 @@
     transform: translateY(-5px) scale(1.1);
   }
 
-  /* شمارنده */
   .stats {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
@@ -320,7 +611,6 @@
 
   .stat-label { color: var(--muted); margin-top: 10px; }
 
-  /* گالری */
   .gallery {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
@@ -361,7 +651,6 @@
   .g5 { background: linear-gradient(135deg, #8a2be2, #ff6b9d); }
   .g6 { background: linear-gradient(135deg, #00d4ff, #00ff88); }
 
-  /* فرم تماس */
   .contact-form {
     max-width: 600px;
     margin: 0 auto;
@@ -392,7 +681,6 @@
 
   .contact-form textarea { min-height: 150px; resize: vertical; }
 
-  /* فوتر */
   footer {
     text-align: center;
     padding: 40px 20px;
@@ -403,14 +691,12 @@
 
   footer strong { color: var(--accent2); }
 
-  /* موبایل */
   @media (max-width: 768px) {
     header { padding: 15px 20px; }
     nav ul { display: none; }
     section { padding: 60px 20px; }
   }
 
-  /* انیمیشن ورود */
   .fade-in {
     opacity: 0;
     transform: translateY(30px);
@@ -422,6 +708,49 @@
 <body>
 
 <div id="particles"></div>
+
+<!-- دکمه باز کردن پلیر -->
+<button class="music-toggle" id="musicToggle" onclick="openPlayer()" title="پخش موزیک">🎵</button>
+
+<!-- پخش‌کننده موزیک -->
+<div class="music-player collapsed" id="musicPlayer">
+  <button class="close-player" onclick="closePlayer()" title="بستن">✕</button>
+
+  <div class="music-header">
+    <div class="music-cover">🎵</div>
+    <div class="music-info">
+      <div class="music-title" id="musicTitle">دیگه خستم - آرینرگ</div>
+      <div class="music-artist" id="musicArtist">B & R Music</div>
+      <div class="waves">
+        <span></span><span></span><span></span>
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+  </div>
+
+  <div class="progress-container">
+    <span class="time" id="currentTime">0:00</span>
+    <div class="progress-bar" id="progressBar" onclick="seek(event)">
+      <div class="progress-fill" id="progressFill"></div>
+    </div>
+    <span class="time" id="duration">0:00</span>
+  </div>
+
+  <div class="music-controls">
+    <button class="ctrl-btn" id="shuffleBtn" onclick="toggleShuffle()" title="تصادفی">🔀</button>
+    <button class="ctrl-btn" onclick="prevTrack()" title="قبلی">⏮</button>
+    <button class="play-btn" id="playBtn" onclick="togglePlay()" title="پخش/توقف">▶</button>
+    <button class="ctrl-btn" onclick="nextTrack()" title="بعدی">⏭</button>
+    <button class="ctrl-btn active" id="repeatBtn" onclick="toggleRepeat()" title="تکرار">🔁</button>
+  </div>
+
+  <div class="volume-container">
+    <span class="volume-icon" id="volumeIcon" onclick="toggleMute()">🔊</span>
+    <input type="range" class="volume-slider" id="volumeSlider" min="0" max="1" step="0.01" value="0.7">
+  </div>
+
+  <audio id="audio" preload="auto"></audio>
+</div>
 
 <header>
   <div class="logo">B & R ✦</div>
@@ -437,7 +766,6 @@
   <button class="theme-btn" onclick="toggleTheme()">🌙</button>
 </header>
 
-<!-- Hero -->
 <section class="hero" id="home">
   <h1>بابک و رضا</h1>
   <p>به دنیای خلاقیت، تکنولوژی و طراحی بی‌نظیر خوش آمدید. ما اینجاییم تا ایده‌های شما را به واقعیت تبدیل کنیم.</p>
@@ -447,7 +775,6 @@
   </div>
 </section>
 
-<!-- تیم -->
 <section id="team">
   <h2 class="section-title fade-in">تیم <span>ما</span></h2>
   <div class="team-grid">
@@ -476,7 +803,6 @@
   </div>
 </section>
 
-<!-- آمار -->
 <section id="stats">
   <h2 class="section-title fade-in">افتخارات <span>ما</span></h2>
   <div class="stats">
@@ -499,7 +825,6 @@
   </div>
 </section>
 
-<!-- گالری -->
 <section id="gallery">
   <h2 class="section-title fade-in">نمونه <span>کارها</span></h2>
   <div class="gallery">
@@ -512,7 +837,6 @@
   </div>
 </section>
 
-<!-- تماس -->
 <section id="contact">
   <h2 class="section-title fade-in">با ما در <span>تماس</span> باشید</h2>
   <form class="contact-form fade-in" onsubmit="event.preventDefault(); alert('پیام شما ارسال شد ✅');">
@@ -528,94 +852,103 @@
 </footer>
 
 <script>
-  // تغییر تم
+  // ===== تغییر تم =====
   function toggleTheme() {
     document.body.classList.toggle('light');
     const btn = document.querySelector('.theme-btn');
     btn.textContent = document.body.classList.contains('light') ? '☀️' : '🌙';
   }
 
-  // انیمیشن ورود
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) entry.target.classList.add('visible');
-    });
-  }, { threshold: 0.1 });
+  // ===== پخش‌کننده موزیک =====
+  const audio = document.getElementById('audio');
+  const playBtn = document.getElementById('playBtn');
+  const progressFill = document.getElementById('progressFill');
+  const progressBar = document.getElementById('progressBar');
+  const currentTimeEl = document.getElementById('currentTime');
+  const durationEl = document.getElementById('duration');
+  const volumeSlider = document.getElementById('volumeSlider');
+  const volumeIcon = document.getElementById('volumeIcon');
+  const musicPlayer = document.getElementById('musicPlayer');
+  const musicToggle = document.getElementById('musicToggle');
 
-  document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+  // 👇👇👇 لینک فایل موزیک تو اینجاست 👇👇👇
+  const MUSIC_URL = 'https://rezataj00181374-hash.github.io/index/Aryanerg%20-%20Dige%20Khastam.mp3';
+  
+  audio.src = MUSIC_URL;
 
-  // شمارنده
-  const counters = document.querySelectorAll('.stat-number');
-  const counterObserver = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        const el = entry.target;
-        const target = +el.dataset.target;
-        let count = 0;
-        const step = target / 60;
-        const update = () => {
-          count += step;
-          if (count < target) {
-            el.textContent = Math.floor(count) + '+';
-            requestAnimationFrame(update);
-          } else {
-            el.textContent = target + '+';
-          }
-        };
-        update();
-        counterObserver.unobserve(el);
-      }
-    });
-  }, { threshold: 0.5 });
-
-  counters.forEach(c => counterObserver.observe(c));
-
-  // اسکرول نرم
-  document.querySelectorAll('a[href^="#"]').forEach(a => {
-    a.addEventListener('click', e => {
-      e.preventDefault();
-      document.querySelector(a.getAttribute('href')).scrollIntoView({ behavior: 'smooth' });
-    });
-  });
-
-  // ذرات متحرک
-  const canvas = document.createElement('canvas');
-  canvas.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:-1;';
-  document.body.appendChild(canvas);
-  const ctx = canvas.getContext('2d');
-  canvas.width = innerWidth;
-  canvas.height = innerHeight;
-
-  const particles = Array.from({length: 60}, () => ({
-    x: Math.random() * canvas.width,
-    y: Math.random() * canvas.height,
-    r: Math.random() * 2 + 1,
-    vx: (Math.random() - 0.5) * 0.5,
-    vy: (Math.random() - 0.5) * 0.5,
-    color: ['#6a5acd', '#ff6b9d', '#00d4ff'][Math.floor(Math.random() * 3)]
-  }));
-
-  function animate() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    particles.forEach(p => {
-      p.x += p.vx; p.y += p.vy;
-      if (p.x < 0 || p.x > canvas.width) p.vx *= -1;
-      if (p.y < 0 || p.y > canvas.height) p.vy *= -1;
-      ctx.beginPath();
-      ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-      ctx.fillStyle = p.color;
-      ctx.globalAlpha = 0.6;
-      ctx.fill();
-    });
-    requestAnimationFrame(animate);
+  function openPlayer() {
+    musicPlayer.classList.remove('collapsed');
+    musicToggle.classList.add('hidden');
+    // پخش خودکار وقتی باز شد
+    if (audio.paused) {
+      audio.play().then(() => {
+        playBtn.textContent = '❚❚';
+        musicPlayer.classList.add('playing');
+      }).catch(() => {});
+    }
   }
-  animate();
 
-  addEventListener('resize', () => {
-    canvas.width = innerWidth;
-    canvas.height = innerHeight;
+  function closePlayer() {
+    musicPlayer.classList.add('collapsed');
+    musicToggle.classList.remove('hidden');
+  }
+
+  function formatTime(sec) {
+    if (isNaN(sec)) return '0:00';
+    const m = Math.floor(sec / 60);
+    const s = Math.floor(sec % 60);
+    return m + ':' + (s < 10 ? '0' : '') + s;
+  }
+
+  function togglePlay() {
+    if (audio.paused) {
+      audio.play();
+      playBtn.textContent = '❚❚';
+      musicPlayer.classList.add('playing');
+    } else {
+      audio.pause();
+      playBtn.textContent = '▶';
+      musicPlayer.classList.remove('playing');
+    }
+  }
+
+  audio.addEventListener('loadedmetadata', () => {
+    durationEl.textContent = formatTime(audio.duration);
   });
-</script>
 
-</body>
-</html>
+  audio.addEventListener('timeupdate', () => {
+    if (audio.duration) {
+      const percent = (audio.currentTime / audio.duration) * 100;
+      progressFill.style.width = percent + '%';
+      currentTimeEl.textContent = formatTime(audio.currentTime);
+    }
+  });
+
+  audio.addEventListener('ended', () => {
+    playBtn.textContent = '▶';
+    musicPlayer.classList.remove('playing');
+  });
+
+  function seek(e) {
+    const rect = progressBar.getBoundingClientRect();
+    const clickX = e.clientX - rect.left;
+    const percent = clickX / rect.width;
+    audio.currentTime = percent * audio.duration;
+  }
+
+  volumeSlider.addEventListener('input', (e) => {
+    audio.volume = e.target.value;
+    updateVolumeIcon();
+  });
+
+  function updateVolumeIcon() {
+    if (audio.volume === 0) volumeIcon.textContent = '🔇';
+    else if (audio.volume < 0.5) volumeIcon.textContent = '🔉';
+    else volumeIcon.textContent = '🔊';
+  }
+
+  function toggleMute() {
+    if (audio.volume > 0) {
+      audio.dataset.prevVolume = audio.volume;
+      audio.volume = 0;
+      volumeSlider.value
