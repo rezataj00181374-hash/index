@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>بابک و رضا | سایت حرفه‌ای</title>
+<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;600;800&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Vazirmatn', sans-serif; }
+
+  :root {
+    --bg: #0a0a1a;
+    --card: rgba(255,255,255,0.05);
+    --text: #ffffff;
+    --muted: #a0a0b0;
+    --accent1: #6a5acd;
+    --accent2: #ff6b9d;
+    --accent3: #00d4ff;
+    --border: rgba(255,255,255,0.1);
+  }
+
+  body.light {
+    --bg: #f0f2ff;
+    --card: rgba(255,255,255,0.7);
+    --text: #1a1a2e;
+    --muted: #555;
+    --border: rgba(0,0,0,0.1);
+  }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    overflow-x: hidden;
+    transition: all 0.5s ease;
+    min-height: 100vh;
+  }
+
+  /* ذرات پس‌زمینه */
+  #particles {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    z-index: -1;
+    background: radial-gradient(circle at 20% 20%, rgba(106,90,205,0.3), transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(255,107,157,0.3), transparent 50%),
+                radial-gradient(circle at 50% 50%, rgba(0,212,255,0.15), transparent 70%);
+  }
+
+  /* هدر */
+  header {
+    position: fixed;
+    top: 0; width: 100%;
+    padding: 15px 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    backdrop-filter: blur(20px);
+    background: var(--card);
+    border-bottom: 1px solid var(--border);
+    z-index: 1000;
+  }
+
+  .logo {
+    font-size: 24px;
+    font-weight: 800;
+    background: linear-gradient(135deg, var(--accent1), var(--accent2), var(--accent3));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  nav ul { display: flex; gap: 25px; list-style: none; }
+  nav a {
+    color: var(--text);
+    text-decoration: none;
+    font-weight: 500;
+    position: relative;
+    transition: 0.3s;
+  }
+  nav a::after {
+    content: '';
+    position: absolute;
+    bottom: -5px; right: 0;
+    width: 0; height: 2px;
+    background: linear-gradient(90deg, var(--accent1), var(--accent2));
+    transition: 0.3s;
+  }
+  nav a:hover::after { width: 100%; }
+  nav a:hover { color: var(--accent2); }
+
+  .theme-btn {
+    background: var(--card);
+    border: 1px solid var(--border);
+    color: var(--text);
+    padding: 8px 14px;
+    border-radius: 50px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: 0.3s;
+  }
+  .theme-btn:hover { transform: scale(1.1) rotate(15deg); }
+
+  /* Hero */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 100px 20px 50px;
+  }
+
+  .hero h1 {
+    font-size: clamp(40px, 8vw, 90px);
+    font-weight: 800;
+    background: linear-gradient(135deg, var(--accent1), var(--accent2), var(--accent3));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: gradientMove 5s ease infinite;
+    background-size: 200% 200%;
+    margin-bottom: 20px;
+  }
+
+  @keyframes gradientMove {
+    0%, 100% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+  }
+
+  .hero p {
+    font-size: clamp(16px, 2vw, 22px);
+    color: var(--muted);
+    max-width: 700px;
+    margin-bottom: 40px;
+    line-height: 1.8;
+  }
+
+  .cta-group { display: flex; gap: 15px; flex-wrap: wrap; justify-content: center; }
+
+  .btn {
+    padding: 14px 32px;
+    border-radius: 50px;
+    border: none;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.3s;
+    text-decoration: none;
+    display: inline-block;
+    font-family: inherit;
+  }
+
+  .btn-primary {
+    background: linear-gradient(135deg, var(--accent1), var(--accent2));
+    color: white;
+    box-shadow: 0 10px 30px rgba(106,90,205,0.4);
+  }
+  .btn-primary:hover { transform: translateY(-5px); box-shadow: 0 15px 40px rgba(255,107,157,0.5); }
+
+  .btn-outline {
+    background: transparent;
+    color: var(--text);
+    border: 2px solid var(--accent3);
+  }
+  .btn-outline:hover { background: var(--accent3); color: #000; }
+
+  /* بخش‌ها */
+  section { padding: 100px 40px; max-width: 1300px; margin: 0 auto; }
+
+  .section-title {
+    font-size: clamp(28px, 4vw, 48px);
+    text-align: center;
+    margin-bottom: 60px;
+    font-weight: 800;
+  }
+
+  .section-title span {
+    background: linear-gradient(135deg, var(--accent1), var(--accent2));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* کارت‌های بابک و رضا */
+  .team-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+  }
+
+  .team-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 25px;
+    padding: 40px 30px;
+    text-align: center;
+    backdrop-filter: blur(20px);
+    transition: 0.4s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .team-card::before {
+    content: '';
+    position: absolute;
+    top: -50%; left: -50%;
+    width: 200%; height: 200%;
+    background: conic-gradient(from 0deg, transparent, var(--accent1), transparent 30%);
+    animation: rotate 4s linear infinite;
+    opacity: 0;
+    transition: 0.4s;
+  }
+
+  .team-card:hover::before { opacity: 0.3; }
+
+  @keyframes rotate { to { transform: rotate(360deg); } }
+
+  .team-card:hover {
+    transform: translateY(-15px);
+    box-shadow: 0 25px 60px rgba(106,90,205,0.4);
+  }
+
+  .avatar {
+    width: 130px; height: 130px;
+    border-radius: 50%;
+    margin: 0 auto 25px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 50px;
+    font-weight: 800;
+    color: white;
+    position: relative;
+    z-index: 1;
+    border: 4px solid rgba(255,255,255,0.2);
+  }
+
+  .avatar.babak { background: linear-gradient(135deg, #6a5acd, #00d4ff); }
+  .avatar.reza  { background: linear-gradient(135deg, #ff6b9d, #ffa500); }
+
+  .team-card h3 {
+    font-size: 28px;
+    margin-bottom: 10px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .team-card .role {
+    color: var(--accent2);
+    font-weight: 600;
+    margin-bottom: 20px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .team-card p {
+    color: var(--muted);
+    line-height: 1.8;
+    position: relative;
+    z-index: 1;
+  }
+
+  .socials {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 25px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .socials a {
+    width: 40px; height: 40px;
+    border-radius: 50%;
+    background: var(--card);
+    border: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    color: var(--text);
+    transition: 0.3s;
+    font-size: 18px;
+  }
+
+  .socials a:hover {
+    background: var(--accent2);
+    transform: translateY(-5px) scale(1.1);
+  }
+
+  /* شمارنده */
+  .stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 30px;
+    margin-top: 60px;
+  }
+
+  .stat {
+    text-align: center;
+    padding: 30px 20px;
+    background: var(--card);
+    border-radius: 20px;
+    border: 1px solid var(--border);
+    backdrop-filter: blur(20px);
+    transition: 0.3s;
+  }
+
+  .stat:hover { transform: scale(1.05); border-color: var(--accent2); }
+
+  .stat-number {
+    font-size: 48px;
+    font-weight: 800;
+    background: linear-gradient(135deg, var(--accent1), var(--accent2));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .stat-label { color: var(--muted); margin-top: 10px; }
+
+  /* گالری */
+  .gallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 20px;
+  }
+
+  .gallery-item {
+    height: 220px;
+    border-radius: 20px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: 0.4s;
+    position: relative;
+  }
+
+  .gallery-item:hover { transform: scale(1.05); }
+
+  .gallery-item::after {
+    content: '✨ مشاهده';
+    position: absolute;
+    inset: 0;
+    background: rgba(0,0,0,0.6);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    opacity: 0;
+    transition: 0.3s;
+  }
+
+  .gallery-item:hover::after { opacity: 1; }
+
+  .g1 { background: linear-gradient(135deg, #6a5acd, #00d4ff); }
+  .g2 { background: linear-gradient(135deg, #ff6b9d, #ffa500); }
+  .g3 { background: linear-gradient(135deg, #00d4ff, #6a5acd); }
+  .g4 { background: linear-gradient(135deg, #ffa500, #ff6b9d); }
+  .g5 { background: linear-gradient(135deg, #8a2be2, #ff6b9d); }
+  .g6 { background: linear-gradient(135deg, #00d4ff, #00ff88); }
+
+  /* فرم تماس */
+  .contact-form {
+    max-width: 600px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .contact-form input,
+  .contact-form textarea {
+    padding: 18px 22px;
+    border-radius: 15px;
+    border: 1px solid var(--border);
+    background: var(--card);
+    color: var(--text);
+    font-family: inherit;
+    font-size: 16px;
+    backdrop-filter: blur(20px);
+    transition: 0.3s;
+  }
+
+  .contact-form input:focus,
+  .contact-form textarea:focus {
+    outline: none;
+    border-color: var(--accent2);
+    box-shadow: 0 0 20px rgba(255,107,157,0.3);
+  }
+
+  .contact-form textarea { min-height: 150px; resize: vertical; }
+
+  /* فوتر */
+  footer {
+    text-align: center;
+    padding: 40px 20px;
+    border-top: 1px solid var(--border);
+    color: var(--muted);
+    margin-top: 50px;
+  }
+
+  footer strong { color: var(--accent2); }
+
+  /* موبایل */
+  @media (max-width: 768px) {
+    header { padding: 15px 20px; }
+    nav ul { display: none; }
+    section { padding: 60px 20px; }
+  }
+
+  /* انیمیشن ورود */
+  .fade-in {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: 0.8s ease;
+  }
+  .fade-in.visible { opacity: 1; transform: translateY(0); }
+</style>
+</head>
+<body>
+
+<div id="particles"></div>
+
+<header>
+  <div class="logo">B & R ✦</div>
+  <nav>
+    <ul>
+      <li><a href="#home">خانه</a></li>
+      <li><a href="#team">تیم</a></li>
+      <li><a href="#stats">آمار</a></li>
+      <li><a href="#gallery">گالری</a></li>
+      <li><a href="#contact">تماس</a></li>
+    </ul>
+  </nav>
+  <button class="theme-btn" onclick="toggleTheme()">🌙</button>
+</header>
+
+<!-- Hero -->
+<section class="hero" id="home">
+  <h1>بابک و رضا</h1>
+  <p>به دنیای خلاقیت، تکنولوژی و طراحی بی‌نظیر خوش آمدید. ما اینجاییم تا ایده‌های شما را به واقعیت تبدیل کنیم.</p>
+  <div class="cta-group">
+    <a href="#team" class="btn btn-primary">آشنایی با ما ✨</a>
+    <a href="#contact" class="btn btn-outline">تماس با ما</a>
+  </div>
+</section>
+
+<!-- تیم -->
+<section id="team">
+  <h2 class="section-title fade-in">تیم <span>ما</span></h2>
+  <div class="team-grid">
+    <div class="team-card fade-in">
+      <div class="avatar babak">ب</div>
+      <h3>بابک</h3>
+      <div class="role">💻 توسعه‌دهنده ارشد</div>
+      <p>متخصص در طراحی وب، برنامه‌نویسی و خلق تجربه‌های دیجیتال منحصر به فرد. عاشق کد زدن و نوآوری.</p>
+      <div class="socials">
+        <a href="#">📧</a>
+        <a href="#">📱</a>
+        <a href="#">🌐</a>
+      </div>
+    </div>
+    <div class="team-card fade-in">
+      <div class="avatar reza">ر</div>
+      <h3>رضا</h3>
+      <div class="role">🎨 طراح خلاق</div>
+      <p>خالق ایده‌های بصری فوق‌العاده و طراح رابط‌های کاربری زیبا. هنر و تکنولوژی را با هم ترکیب می‌کند.</p>
+      <div class="socials">
+        <a href="#">📧</a>
+        <a href="#">📱</a>
+        <a href="#">🌐</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- آمار -->
+<section id="stats">
+  <h2 class="section-title fade-in">افتخارات <span>ما</span></h2>
+  <div class="stats">
+    <div class="stat fade-in">
+      <div class="stat-number" data-target="250">0</div>
+      <div class="stat-label">پروژه موفق</div>
+    </div>
+    <div class="stat fade-in">
+      <div class="stat-number" data-target="180">0</div>
+      <div class="stat-label">مشتری راضی</div>
+    </div>
+    <div class="stat fade-in">
+      <div class="stat-number" data-target="15">0</div>
+      <div class="stat-label">جایزه معتبر</div>
+    </div>
+    <div class="stat fade-in">
+      <div class="stat-number" data-target="8">0</div>
+      <div class="stat-label">سال تجربه</div>
+    </div>
+  </div>
+</section>
+
+<!-- گالری -->
+<section id="gallery">
+  <h2 class="section-title fade-in">نمونه <span>کارها</span></h2>
+  <div class="gallery">
+    <div class="gallery-item g1 fade-in"></div>
+    <div class="gallery-item g2 fade-in"></div>
+    <div class="gallery-item g3 fade-in"></div>
+    <div class="gallery-item g4 fade-in"></div>
+    <div class="gallery-item g5 fade-in"></div>
+    <div class="gallery-item g6 fade-in"></div>
+  </div>
+</section>
+
+<!-- تماس -->
+<section id="contact">
+  <h2 class="section-title fade-in">با ما در <span>تماس</span> باشید</h2>
+  <form class="contact-form fade-in" onsubmit="event.preventDefault(); alert('پیام شما ارسال شد ✅');">
+    <input type="text" placeholder="نام شما" required>
+    <input type="email" placeholder="ایمیل شما" required>
+    <textarea placeholder="پیام شما..." required></textarea>
+    <button type="submit" class="btn btn-primary">ارسال پیام 🚀</button>
+  </form>
+</section>
+
+<footer>
+  ساخته شده با ❤️ توسط <strong>بابک</strong> و <strong>رضا</strong> — © 2025
+</footer>
+
+<script>
+  // تغییر تم
+  function toggleTheme() {
+    document.body.classList.toggle('light');
+    const btn = document.querySelector('.theme-btn');
+    btn.textContent = document.body.classList.contains('light') ? '☀️' : '🌙';
+  }
+
+  // انیمیشن ورود
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) entry.target.classList.add('visible');
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+  // شمارنده
+  const counters = document.querySelectorAll('.stat-number');
+  const counterObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const el = entry.target;
+        const target = +el.dataset.target;
+        let count = 0;
+        const step = target / 60;
+        const update = () => {
+          count += step;
+          if (count < target) {
+            el.textContent = Math.floor(count) + '+';
+            requestAnimationFrame(update);
+          } else {
+            el.textContent = target + '+';
+          }
+        };
+        update();
+        counterObserver.unobserve(el);
+      }
+    });
+  }, { threshold: 0.5 });
+
+  counters.forEach(c => counterObserver.observe(c));
+
+  // اسکرول نرم
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+      e.preventDefault();
+      document.querySelector(a.getAttribute('href')).scrollIntoView({ behavior: 'smooth' });
+    });
+  });
+
+  // ذرات متحرک
+  const canvas = document.createElement('canvas');
+  canvas.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:-1;';
+  document.body.appendChild(canvas);
+  const ctx = canvas.getContext('2d');
+  canvas.width = innerWidth;
+  canvas.height = innerHeight;
+
+  const particles = Array.from({length: 60}, () => ({
+    x: Math.random() * canvas.width,
+    y: Math.random() * canvas.height,
+    r: Math.random() * 2 + 1,
+    vx: (Math.random() - 0.5) * 0.5,
+    vy: (Math.random() - 0.5) * 0.5,
+    color: ['#6a5acd', '#ff6b9d', '#00d4ff'][Math.floor(Math.random() * 3)]
+  }));
+
+  function animate() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    particles.forEach(p => {
+      p.x += p.vx; p.y += p.vy;
+      if (p.x < 0 || p.x > canvas.width) p.vx *= -1;
+      if (p.y < 0 || p.y > canvas.height) p.vy *= -1;
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+      ctx.fillStyle = p.color;
+      ctx.globalAlpha = 0.6;
+      ctx.fill();
+    });
+    requestAnimationFrame(animate);
+  }
+  animate();
+
+  addEventListener('resize', () => {
+    canvas.width = innerWidth;
+    canvas.height = innerHeight;
+  });
+</script>
+
+</body>
+</html>
